@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "702088212153",
+    "project_id": "flutter-e-commerce-nike",
+    "storage_bucket": "flutter-e-commerce-nike.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:702088212153:android:73bee6e79649c865c03568",
+        "android_client_info": {
+          "package_name": "com.example.nike_e_commerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "702088212153-1ivhl9468u0dsfqmhgg4907tvfvo3elq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nike_e_commerce",
+            "certificate_hash": "92b1c0c362c46f26b617db7cd407505301ad7f3a"
+          }
+        },
+        {
+          "client_id": "702088212153-6k9q7lsedd9evfqs7i3oani3ef74mlvr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAawzITPJ3eVmuca3zevsOIiLNCjrg95KI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "702088212153-6k9q7lsedd9evfqs7i3oani3ef74mlvr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "702088212153-enblupih0gb9ur1ste7r4utmophecevi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.nikeECommerce.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
