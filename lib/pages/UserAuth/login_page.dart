@@ -49,144 +49,147 @@ class _LoginPageState extends State<LoginPage> {
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Image.asset(
-                'lib/images/NikeLogo.png',
-                width: 120,
-              ),
-              SizedBox(height: 50),
-              Text(
-                'Welcome back',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
+              Column(children: [
+                Image.asset(
+                  'lib/asset/images/NikeLogo.png',
+                  width: 120,
                 ),
-              ),
-              SizedBox(height: 20),
-              AuthTextField(
-                labelText: 'Email',
-                controller: _emailController,
-              ),
-              SizedBox(height: 20),
-              AuthTextField(
-                labelText: 'Password',
-                obScureText: true,
-                controller: _passwordController,
-              ),
-              SizedBox(height: 20),
-              AuthButton(
-                onTap: () {
-                  LoginHandle().loginUser(
-                    context: context,
-                    email: _emailController.text,
-                    password: _passwordController.text,
-                  );
-                },
-                buttonLabel: 'Sign In',
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Not a member?',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                    ),
+                SizedBox(height: 50),
+                Text(
+                  'Welcome back',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SignupPage()));
-                    },
-                    child: Text(
-                      'Sign Up',
+                ),
+                SizedBox(height: 20),
+                AuthTextField(
+                  labelText: 'Email',
+                  controller: _emailController,
+                ),
+                SizedBox(height: 20),
+                AuthTextField(
+                  labelText: 'Password',
+                  obScureText: true,
+                  controller: _passwordController,
+                ),
+                SizedBox(height: 20),
+                AuthButton(
+                  onTap: () {
+                    LoginHandle().loginUser(
+                      context: context,
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                    );
+                  },
+                  buttonLabel: 'Sign In',
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Not a member?',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 15,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 100,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Divider(
-                      color: Colors.grey[400],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      'Or continue with',
-                      style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 15,
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignupPage()));
+                      },
+                      child: Text(
+                        'Sign Up',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Divider(
-                      color: Colors.grey[400],
+                  ],
+                ),
+              ]),
+              Column(children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Divider(
+                        color: Colors.grey[400],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () async {
-                      // Trigger Google Sign-In
-                      User? user = await _authService.signInWithGoogle();
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        'Or continue with',
+                        style: TextStyle(
+                          color: Colors.grey[700],
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Divider(
+                        color: Colors.grey[400],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () async {
+                        // Trigger Google Sign-In
+                        User? user = await _authService.signInWithGoogle();
 
-                      if (user != null) {
-                        showTopSnackBar(
-                          Overlay.of(context),
-                          CustomAlertBar.success(
-                            messageStatus: 'Success',
-                            message: 'Logged in successfully',
-                          ),
-                        );
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ProfilePage(),
-                          ),
-                        );
-                      } else {
-                        showTopSnackBar(
-                          Overlay.of(context),
-                          CustomAlertBar.error(
-                            messageStatus: 'Error',
-                            message: 'Error signing with google',
-                          ),
-                        );
-                      }
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Image.asset(
-                        'lib/images/Google.png',
-                        width: 60,
+                        if (user != null) {
+                          showTopSnackBar(
+                            Overlay.of(context),
+                            CustomAlertBar.success(
+                              messageStatus: 'Success',
+                              message: 'Logged in successfully',
+                            ),
+                          );
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProfilePage(),
+                            ),
+                          );
+                        } else {
+                          showTopSnackBar(
+                            Overlay.of(context),
+                            CustomAlertBar.error(
+                              messageStatus: 'Error',
+                              message: 'Error signing with google',
+                            ),
+                          );
+                        }
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Image.asset(
+                          'lib/asset/images/Google.png',
+                          width: 60,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
+                    SizedBox(height: 20),
+                  ],
+                ),
+              ]),
             ],
           ),
         ),

@@ -30,7 +30,7 @@ class _WelcomePageState extends State<WelcomePage> {
             Padding(
               padding: const EdgeInsets.only(right: 30.0),
               child: Image.asset(
-                'lib/images/Shoes.png',
+                'lib/asset/images/Shoes.png',
                 height: 200,
               ),
             ),

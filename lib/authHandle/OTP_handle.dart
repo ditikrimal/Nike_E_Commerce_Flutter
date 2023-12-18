@@ -10,8 +10,8 @@ import 'package:nike_e_commerce/pages/UserAuth/login_page.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 Future<String> sendOTPEmail({
-  required String user_fullName,
-  required String user_email,
+  required String? user_fullName,
+  required String? user_email,
 }) async {
   final otp = Random().nextInt(999999).toString().padLeft(6, '0');
 

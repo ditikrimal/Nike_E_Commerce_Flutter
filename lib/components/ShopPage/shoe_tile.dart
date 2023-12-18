@@ -1,11 +1,17 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_const_constructors_in_immutables
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:nike_e_commerce/components/CartPage/add_to_cart_btn.dart';
+import 'package:nike_e_commerce/models/cart.dart';
 import 'package:nike_e_commerce/models/shoe.dart';
+import 'package:nike_e_commerce/pages/UserAuth/login_page.dart';
+import 'package:nike_e_commerce/services/auth/auth_service.dart';
 
 class ShoeTile extends StatelessWidget {
   final Shoe shoe;
   ShoeTile({super.key, required this.shoe});
+  // final user = AuthService.firebase().currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -59,17 +65,18 @@ class ShoeTile extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.all(17),
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadiusDirectional.only(
-                        topStart: Radius.circular(15),
-                        bottomEnd: Radius.circular(15)),
-                  ),
-                  child: Icon(
-                    Icons.add,
-                    size: 32,
-                    color: Colors.white,
+                  child: AddToCartButton(
+                    onTap: () {
+                      final user = FirebaseAuth.instance.currentUser;
+                      if (user != null) {
+                        addToCart(shoe, user.email!);
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginPage()),
+                        );
+                      }
+                    },
                   ),
                 )
               ],

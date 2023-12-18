@@ -2,8 +2,9 @@
 // ignore_for_file: non_constant_identifier_names, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:nike_e_commerce/components/shoe_tile.dart';
+import 'package:nike_e_commerce/components/ShopPage/shoe_tile.dart';
 import 'package:nike_e_commerce/models/shoe.dart';
+import 'package:shimmer/shimmer.dart';
 
 SizedBox shoeList(List<Shoe> shoes, {bool isLoading = false}) {
   return SizedBox(
@@ -43,8 +44,16 @@ SizedBox emptyShoesList() {
   );
 }
 
+shimmerGradient() {
+  return LinearGradient(
+    colors: [Colors.grey[300]!, Colors.grey[100]!],
+    begin: Alignment(-1.0, -1.0),
+    end: Alignment(1.0, 1.0),
+  );
+}
+
 Widget _buildSkeletonLoading() {
-  return SizedBox(
+  return (SizedBox(
     height: 200, // Adjust the height as needed
     child: ListView.builder(
       scrollDirection: Axis.horizontal,
@@ -60,19 +69,25 @@ Widget _buildSkeletonLoading() {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                margin: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                height: 200,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              Shimmer(
+                gradient: shimmerGradient(),
                 child: Container(
-                  height: 20,
-                  color: Colors.grey[300],
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  height: 200,
+                ),
+              ),
+              Shimmer(
+                gradient: shimmerGradient(),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Container(
+                    height: 20,
+                    color: Colors.grey[300],
+                  ),
                 ),
               ),
               SizedBox(
@@ -89,36 +104,43 @@ Widget _buildSkeletonLoading() {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            height: 20,
-                            width: 100,
-                            color: Colors.grey[300],
+                          Shimmer(
+                            gradient: shimmerGradient(),
+                            child: Container(
+                              height: 20,
+                              width: 100,
+                              color: Colors.grey[300],
+                            ),
                           ),
                           SizedBox(
                             height: 5,
                           ),
-                          Container(
-                            height: 20,
-                            width: 50,
-                            color: Colors.grey[300],
-                          )
+                          Shimmer(
+                              gradient: shimmerGradient(),
+                              child: Container(
+                                height: 20,
+                                width: 50,
+                                color: Colors.grey[300],
+                              ))
                         ],
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.all(17),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadiusDirectional.only(
-                            topStart: Radius.circular(15),
-                            bottomEnd: Radius.circular(15)),
-                      ),
-                      child: Icon(
-                        Icons.add,
-                        size: 32,
-                        color: Colors.white,
-                      ),
-                    )
+                    Shimmer(
+                        gradient: shimmerGradient(),
+                        child: Container(
+                          padding: EdgeInsets.all(17),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadiusDirectional.only(
+                                topStart: Radius.circular(15),
+                                bottomEnd: Radius.circular(15)),
+                          ),
+                          child: Icon(
+                            Icons.add,
+                            size: 32,
+                            color: Colors.white,
+                          ),
+                        ))
                   ],
                 ),
               ),
@@ -127,5 +149,5 @@ Widget _buildSkeletonLoading() {
         );
       },
     ),
-  );
+  ));
 }

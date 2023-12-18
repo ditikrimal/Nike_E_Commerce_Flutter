@@ -30,7 +30,16 @@ class GoogleAuthHandle {
       final UserCredential authResult =
           await _auth.signInWithCredential(credential);
 
-      // Return the user object
+      FirebaseFirestore.instance
+          .collection('UserInfo')
+          .doc(authResult.user!.email)
+          .set({
+        'name': authResult.user!.displayName,
+        'email': authResult.user!.email,
+        'photoUrl': "",
+        'phoneNumber': "",
+        'isVerified': false,
+      });
 
       return authResult.user;
     } catch (error) {

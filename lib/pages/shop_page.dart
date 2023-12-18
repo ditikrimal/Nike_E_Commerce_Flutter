@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:nike_e_commerce/components/shoes_list.dart';
-import 'package:nike_e_commerce/components/shop_body.dart';
+import 'package:nike_e_commerce/components/ShopPage/shoes_list.dart';
+import 'package:nike_e_commerce/components/ShopPage/shop_body.dart';
 import 'package:nike_e_commerce/models/shoe.dart';
 
 class ShopPage extends StatefulWidget {

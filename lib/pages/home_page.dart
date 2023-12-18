@@ -23,16 +23,17 @@ final GoogleAuthHandle _authService = GoogleAuthHandle();
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  void navigateBottomBar(index) {
+
+  final _navigationPages = [
+    ShopPage(),
+    CartPage(),
+  ];
+
+  void navigateBottomBar(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
-
-  final List<Widget> _navigationPages = [
-    ShopPage(),
-    CartPage(),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                 DrawerHeader(
                   padding: EdgeInsets.only(top: 40),
                   child: Image.asset(
-                    'lib/images/Nike.png',
+                    'lib/asset/images/Nike.png',
                     width: 180,
                     color: Colors.white,
                   ),

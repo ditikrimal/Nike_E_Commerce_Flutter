@@ -29,7 +29,7 @@ class LoginHandle {
         ),
       );
       Navigator.pop(context);
-      Navigator.pushReplacementNamed(context, '/profile');
+      Navigator.pop(context);
     } on InvalidCredentialsAuthException {
       showTopSnackBar(
         Overlay.of(context),

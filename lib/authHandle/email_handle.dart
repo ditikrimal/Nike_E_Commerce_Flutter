@@ -1,4 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:nike_e_commerce/pages/UserAuth/verifyemail_page.dart';
 import 'package:nike_e_commerce/services/auth/auth_user.dart';
 
 Future<bool> checkEmail(email) async {
@@ -21,8 +24,6 @@ Future<bool> checkEmail(email) async {
 }
 
 Future<bool> updateEmailVerification(email) async {
-  // Check if the email is verified or not
-
   Map<String, bool> dataToUpdate = {'isVerified': true};
   CollectionReference collectionRef =
       FirebaseFirestore.instance.collection('UserInfo');

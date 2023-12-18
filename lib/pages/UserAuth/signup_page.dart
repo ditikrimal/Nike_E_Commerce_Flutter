@@ -53,7 +53,7 @@ class _SignupPageState extends State<SignupPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'lib/images/NikeLogo.png',
+                'lib/asset/images/NikeLogo.png',
                 width: 120,
               ),
               SizedBox(height: 50),
@@ -108,8 +108,7 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => LoginPage()));
+                      Navigator.pop(context);
                     },
                     child: Text(
                       'Sign In',
