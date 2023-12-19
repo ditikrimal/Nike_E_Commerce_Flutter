@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 
 class DrawerTile extends StatefulWidget {
   final Icon icon;
+  void Function()? onTap;
+
   final String listName;
-  const DrawerTile({
+  DrawerTile({
     super.key,
     required this.icon,
     required this.listName,
+    this.onTap,
   });
 
   @override
@@ -19,9 +22,10 @@ class DrawerTileState extends State<DrawerTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: EdgeInsets.only(left: 25),
+      contentPadding: EdgeInsets.only(left: 30),
       leading: widget.icon,
       iconColor: Colors.white,
+      onTap: widget.onTap,
       title: Text(
         widget.listName.toUpperCase(),
         style: TextStyle(

@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:nike_e_commerce/authHandle/register_handle.dart';
 import 'package:nike_e_commerce/components/AuthComponents/auth_button.dart';
 import 'package:nike_e_commerce/components/AuthComponents/auth_textfield.dart';
-import 'package:nike_e_commerce/pages/UserAuth/login_page.dart';
-import 'package:nike_e_commerce/pages/UserAuth/verifyotp_page.dart';
-import 'package:nike_e_commerce/services/auth/auth_service.dart';
 
 class SignupPage extends StatefulWidget {
   SignupPage({super.key});

@@ -2,12 +2,9 @@
 
 import 'dart:convert';
 import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:nike_e_commerce/components/alert_snackbar.dart';
-import 'package:nike_e_commerce/pages/UserAuth/login_page.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 Future<String> sendOTPEmail({
   required String? user_fullName,

@@ -30,16 +30,29 @@ SizedBox emptyShoesList() {
   return SizedBox(
     child: Container(
       margin: EdgeInsets.only(top: 200),
-      child: Center(
-        child: Text(
-          'No shoes Available',
-          style: TextStyle(
-            fontSize: 20,
-            color: Colors.grey[600],
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              'No shoes Available',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.grey[600],
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              'Try searching for something or refresh the page',
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.grey[600],
+              ),
+            ),
+          ]),
     ),
   );
 }

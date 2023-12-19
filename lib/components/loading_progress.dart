@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
-SizedBox loadingProgress() {
-  return SizedBox(
+Widget loadingProgress(double opacity) {
+  return Container(
+    decoration: BoxDecoration(
+      color: Colors.white.withOpacity(opacity),
+    ),
     child: Center(
       child: Stack(
         alignment: Alignment.center,

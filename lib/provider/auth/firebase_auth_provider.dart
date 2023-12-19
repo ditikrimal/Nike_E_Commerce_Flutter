@@ -1,5 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:nike_e_commerce/firebase_options.dart';
+import '../../firebase_options.dart';
 
 import 'auth_exceptions.dart';
 import 'auth_provider.dart';

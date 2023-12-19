@@ -2,8 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:nike_e_commerce/components/alert_snackbar.dart';
-import 'package:nike_e_commerce/services/auth/auth_exceptions.dart';
-import 'package:nike_e_commerce/services/auth/auth_service.dart';
+import 'package:nike_e_commerce/components/loading_progress.dart';
+import 'package:nike_e_commerce/provider/auth/auth_exceptions.dart';
+import 'package:nike_e_commerce/provider/auth/auth_service.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class LoginHandle {
@@ -16,9 +17,7 @@ class LoginHandle {
       showDialog(
           context: context,
           builder: (context) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
+            return loadingProgress(0.5);
           });
       await AuthService.firebase().logIn(email: email, password: password);
       showTopSnackBar(

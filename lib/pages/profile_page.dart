@@ -35,7 +35,6 @@ class _ProfilePageState extends State<ProfilePage> {
         _isCheckingEmail = false;
       });
       if (isEmailVerified) {
-        // Handle the case when email is verified
       } else {
         user.sendEmailVerification();
 

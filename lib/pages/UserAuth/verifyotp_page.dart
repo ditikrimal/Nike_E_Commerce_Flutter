@@ -8,7 +8,7 @@ import 'package:nike_e_commerce/components/AuthComponents/auth_button.dart';
 import 'package:nike_e_commerce/components/alert_snackbar.dart';
 import 'package:nike_e_commerce/pages/UserAuth/login_page.dart';
 import 'package:nike_e_commerce/pages/profile_page.dart';
-import 'package:nike_e_commerce/services/auth/auth_service.dart';
+import 'package:nike_e_commerce/provider/auth/auth_service.dart';
 import 'package:otp_timer_button/otp_timer_button.dart';
 import 'package:pinput/pinput.dart';
 import 'package:shared_preferences/shared_preferences.dart';

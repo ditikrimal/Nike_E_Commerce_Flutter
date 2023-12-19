@@ -11,20 +11,26 @@ import 'package:nike_e_commerce/pages/UserAuth/verifyotp_page.dart';
 import 'package:nike_e_commerce/pages/home_page.dart';
 import 'package:nike_e_commerce/pages/profile_page.dart';
 import 'package:nike_e_commerce/pages/welcome_page.dart';
+import 'package:nike_e_commerce/provider/cart_provider.dart';
+import 'package:nike_e_commerce/provider/shoes_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  //Initialize Google Signin
-  GoogleSignIn googleSignIn = GoogleSignIn(
-    scopes: [
-      'email',
-      'https://www.googleapis.com/auth/contacts.readonly',
-    ],
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ShoeProvider()),
+        ChangeNotifierProvider(create: (context) => CartProvider()),
+        // Add other providers if needed
+      ],
+      child: MyApp(),
+    ),
   );
-  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

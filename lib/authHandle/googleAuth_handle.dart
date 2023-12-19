@@ -38,7 +38,7 @@ class GoogleAuthHandle {
         'email': authResult.user!.email,
         'photoUrl': "",
         'phoneNumber': "",
-        'isVerified': false,
+        'isVerified': true,
       });
 
       return authResult.user;
