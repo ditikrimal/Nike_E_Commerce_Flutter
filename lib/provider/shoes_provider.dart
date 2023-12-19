@@ -30,4 +30,10 @@ class ShoeProvider with ChangeNotifier {
     _filteredShoes = List.from(_shoes);
     notifyListeners();
   }
+
+  Future<void> fetchShoesByCategory(String category) async {
+    _shoes = await _shoeService.fetchShoesFromFirestoreByCategory(category);
+    _filteredShoes = List.from(_shoes);
+    notifyListeners();
+  }
 }

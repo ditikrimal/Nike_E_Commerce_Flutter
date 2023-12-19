@@ -11,7 +11,7 @@ class ShoeTile extends StatelessWidget {
   final Shoe shoe;
   ShoeTile({super.key, required this.shoe});
   // final user = AuthService.firebase().currentUser;
-  UserCartProvider cartProvider = UserCartProvider();
+  CartProvider cartProvider = CartProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class ShoeTile extends StatelessWidget {
                             fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        '\$ ${shoe.price}',
+                        '\$ ${shoe.price.toString()}',
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.grey,

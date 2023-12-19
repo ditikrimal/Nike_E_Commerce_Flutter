@@ -1,7 +1,7 @@
 class Cart {
   final String shoeID;
   final String name;
-  final String price;
+  final int price;
   final String imagePath;
   final String description;
   final int numberOfItems;

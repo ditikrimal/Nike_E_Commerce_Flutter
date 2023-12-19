@@ -16,7 +16,6 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   // Initialize to an empty list
   bool isLoading = false;
-  UserCartProvider cartProvider = UserCartProvider();
   CartProvider _cartProvider = CartProvider();
   final user_email = FirebaseAuth.instance.currentUser!.email!;
   @override
@@ -79,20 +78,19 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  SizedBox cartList(List<Shoe> shoes, {bool isLoading = false}) {
+  SizedBox cartList(List<Shoe> cart, {bool isLoading = false}) {
     return SizedBox(
       height: 450,
       child: Container(
         padding: EdgeInsets.only(left: 10, right: 10),
         child: ListView.builder(
           scrollDirection: Axis.vertical,
-          itemCount: isLoading ? 3 : shoes.length,
+          itemCount: isLoading ? 3 : cart.length,
           itemBuilder: (context, index) {
             return isLoading
                 ? _skeltonLoader()
                 : cart_tile(
-                    shoes[index],
-                    shoes,
+                    cart[index],
                   );
           },
         ),
@@ -101,8 +99,7 @@ class _CartPageState extends State<CartPage> {
   }
 
   Widget cart_tile(
-    Shoe shoe,
-    List<Shoe> userCart,
+    Shoe userCart,
   ) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -113,7 +110,7 @@ class _CartPageState extends State<CartPage> {
       child: Row(
         children: [
           Image.asset(
-            shoe.imagePath,
+            userCart.imagePath,
             height: 70,
           ),
           SizedBox(width: 10),
@@ -121,14 +118,14 @@ class _CartPageState extends State<CartPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                shoe.name,
+                userCart.name,
                 style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                '\$ ${shoe.price}',
+                '\$ ${userCart.price.toString()}',
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
@@ -142,7 +139,8 @@ class _CartPageState extends State<CartPage> {
               setState(() {
                 isLoading = true;
               });
-              await _cartProvider.decrementItemInCart(shoe.shoeID, user_email);
+              await _cartProvider.decrementItemInCart(
+                  userCart.shoeID, user_email);
               setState(() {
                 isLoading = false;
               });
@@ -150,7 +148,7 @@ class _CartPageState extends State<CartPage> {
             icon: Icon(Icons.remove),
           ),
           Text(
-            '${shoe.numberOfItems}',
+            '${userCart.numberOfItems}',
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.bold,
@@ -161,7 +159,8 @@ class _CartPageState extends State<CartPage> {
               setState(() {
                 isLoading = true;
               });
-              await _cartProvider.incrementItemInCart(shoe.shoeID, user_email);
+              await _cartProvider.incrementItemInCart(
+                  userCart.shoeID, user_email);
               setState(() {
                 isLoading = false;
               });
@@ -173,7 +172,7 @@ class _CartPageState extends State<CartPage> {
               setState(() {
                 isLoading = true;
               });
-              await _cartProvider.removeFromCart(shoe.shoeID, user_email);
+              await _cartProvider.removeFromCart(userCart.shoeID, user_email);
               setState(() {
                 isLoading = false;
               });

@@ -54,9 +54,11 @@ class _ShopPageState extends State<ShopPage> {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return ShopPageBody(
-                    shoesList: shoeList([], isLoading: true),
-                    searchController: _searchController,
-                    onSearch: (query) => _handleSearch(query, shoeProvider));
+                  shoesList: shoeList([], isLoading: true),
+                  searchController: _searchController,
+                  onSearch: (query) => _handleSearch(query, shoeProvider),
+                  shoe: [],
+                );
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else if (!shoeProvider.shoes.isNotEmpty) {
@@ -65,17 +67,25 @@ class _ShopPageState extends State<ShopPage> {
                 final bool noShoesFound = shoeProvider.filteredShoes.isEmpty;
                 if (noShoesFound) {
                   return ShopPageBody(
-                      shoesList: emptyShoesList(),
-                      searchController: _searchController,
-                      onSearch: (query) => _handleSearch(query, shoeProvider));
+                    shoesList: emptyShoesList(),
+                    searchController: _searchController,
+                    onSearch: (query) => _handleSearch(query, shoeProvider),
+                    shoe: shoeProvider.searchQuery.isEmpty
+                        ? shoeProvider.shoes
+                        : shoeProvider.filteredShoes,
+                  );
                 }
 
                 return ShopPageBody(
-                    shoesList: shoeList(shoeProvider.searchQuery.isEmpty
-                        ? shoeProvider.shoes
-                        : shoeProvider.filteredShoes),
-                    searchController: _searchController,
-                    onSearch: (query) => _handleSearch(query, shoeProvider));
+                  shoesList: shoeList(shoeProvider.searchQuery.isEmpty
+                      ? shoeProvider.shoes
+                      : shoeProvider.filteredShoes),
+                  searchController: _searchController,
+                  onSearch: (query) => _handleSearch(query, shoeProvider),
+                  shoe: shoeProvider.searchQuery.isEmpty
+                      ? shoeProvider.shoes
+                      : shoeProvider.filteredShoes,
+                );
               }
             },
           ),

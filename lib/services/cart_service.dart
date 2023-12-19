@@ -26,14 +26,20 @@ class CartService {
 
     for (var doc in cartSnapshot.docs) {
       Map<String, dynamic> data = doc.data()!;
-      userCart.add(Shoe(
-        shoeID: doc.id,
-        name: data['name'] ?? '',
-        price: data['price'] ?? '',
-        imagePath: data['imagePath'] ?? '',
-        description: data['description'] ?? '',
-        numberOfItems: data['numberOfItems'] ?? 1,
-      ));
+      DocumentReference shoeRef = data['shoeRef'];
+      var shoeDoc = await shoeRef.get();
+
+      if (shoeDoc.exists) {
+        userCart.add(Shoe(
+          shoeID: doc.id,
+          name: shoeDoc['name'] ?? '',
+          price: shoeDoc['price'] ?? '',
+          imagePath: shoeDoc['imagePath'] ?? '',
+          description: shoeDoc['description'] ?? 'Description',
+          numberOfItems: data['numberOfItems'] ?? 1,
+          category: shoeDoc['category'] ?? 'Category',
+        ));
+      }
     }
 
     return userCart;
@@ -56,11 +62,13 @@ class CartService {
         // You can add other fields that need updating
       });
     } else {
-      // If the item doesn't exist, create a new cart item
+      // If the item doesn't exist, create a new cart item with a reference to the shoe
+      final shoeRef = FirebaseFirestore.instance
+          .collection('shoesCollection')
+          .doc(shoe.shoeID);
+
       await cartItemRef.set({
-        'name': shoe.name,
-        'price': shoe.price,
-        'imagePath': shoe.imagePath,
+        'shoeRef': shoeRef, // Assign a valid DocumentReference to 'shoeRef'
         'addedAt': DateTime.now(),
         'numberOfItems': 1,
         // Add other product details as needed
