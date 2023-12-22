@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:nike_e_commerce/authHandle/register_handle.dart';
 
 class AuthButton extends StatelessWidget {
   Function() onTap;

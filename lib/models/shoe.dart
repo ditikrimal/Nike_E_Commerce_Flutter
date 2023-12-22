@@ -1,13 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class Shoe {
   final String shoeID;
   final String name;
-  final int price;
+  final double price;
   final String imagePath;
   final String description;
   final String category;
   final int numberOfItems;
+  final int pickedTime;
   Shoe({
     required this.shoeID,
     required this.name,
@@ -16,5 +15,6 @@ class Shoe {
     required this.description,
     required this.category,
     this.numberOfItems = 1,
+    this.pickedTime = 0,
   });
 }

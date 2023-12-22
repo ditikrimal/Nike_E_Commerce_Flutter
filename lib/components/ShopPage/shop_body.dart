@@ -1,11 +1,12 @@
+import 'package:NikeStore/components/CartPage/search_add_to_cart_btn.dart';
+import 'package:NikeStore/components/ShopPage/shoe_category.dart';
+import 'package:NikeStore/models/shoe.dart';
+import 'package:NikeStore/pages/UserAuth/login_page.dart';
+import 'package:NikeStore/pages/product_detail_page.dart';
+import 'package:NikeStore/provider/cart_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:nike_e_commerce/components/CartPage/add_to_cart_btn.dart';
-import 'package:nike_e_commerce/components/CartPage/search_add_to_cart_btn.dart';
-import 'package:nike_e_commerce/components/ShopPage/shoe_category.dart';
-import 'package:nike_e_commerce/models/shoe.dart';
-import 'package:nike_e_commerce/pages/UserAuth/login_page.dart';
-import 'package:nike_e_commerce/provider/cart_provider.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class ShopPageBody extends StatefulWidget {
   final SizedBox shoesList;
@@ -106,14 +107,6 @@ class _ShopPageBodyState extends State<ShopPageBody> {
   Widget _buildNormalBody() {
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.only(bottom: 15, top: 10),
-          alignment: Alignment.center,
-          child: Text(
-            'where comfort meets fashion, NIKE',
-            style: TextStyle(color: Colors.grey[600]),
-          ),
-        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 23.0),
           child: Row(
@@ -146,9 +139,9 @@ class _ShopPageBodyState extends State<ShopPageBody> {
           ),
         ),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           child: Text(
-            'Categories'.toUpperCase(),
+            'Top Categories'.toUpperCase(),
             style: const TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
@@ -165,113 +158,125 @@ class _ShopPageBodyState extends State<ShopPageBody> {
   }
 
   Widget _buildSearchBody() {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height,
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.only(bottom: 15, top: 10),
-            alignment: Alignment.center,
-            child: Text(
-              'where comfort meets fashion, NIKE',
-              style: TextStyle(color: Colors.grey[600]),
-            ),
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.only(bottom: 15, top: 10),
+          alignment: Alignment.center,
+          child: Text(
+            'where comfort meets fashion, NIKE',
+            style: TextStyle(color: Colors.grey[600]),
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 23.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  'Search Results',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.8,
-            child: GridView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
+        ),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 23.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                'Search Results',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              itemCount: widget.shoe.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: Image.asset(
+            ],
+          ),
+        ),
+        StaggeredGrid.count(
+          crossAxisCount: 2,
+          mainAxisSpacing: 10,
+          children: [
+            ...List.generate(
+              widget.shoe.length,
+              (index) {
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ProductDetailsPage(
+                        shoe: widget.shoe[index],
+                      );
+                    }));
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      children: [
+                        Image.asset(
                           widget.shoe[index].imagePath,
                           height: 100,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
                         ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 15.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(bottom: 5),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    widget.shoe[index].name.toUpperCase(),
-                                    style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    '\$ ${widget.shoe[index].price.toString()}',
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.bold,
+                        SizedBox(
+                          height: 50,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Text(
+                            widget.shoe[index].name.toUpperCase(),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(left: 20.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.only(bottom: 5),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '\$ ${widget.shoe[index].price.toString()}',
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            AddToCartButtonSearch(
-                              onTap: () {
-                                final user = FirebaseAuth.instance.currentUser;
-                                if (user != null) {
-                                  cartProvider.addToCart(
-                                      widget.shoe[index], user.email!);
-                                } else {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginPage()),
-                                  );
-                                }
-                              },
-                            ),
-                          ],
+                              AddToCartButtonSearch(
+                                onTap: () {
+                                  final user =
+                                      FirebaseAuth.instance.currentUser;
+                                  if (user != null) {
+                                    cartProvider.addToCart(
+                                        widget.shoe[index], user.email!);
+                                  } else {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginPage()),
+                                    );
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               },
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
+      ],
     );
   }
 }

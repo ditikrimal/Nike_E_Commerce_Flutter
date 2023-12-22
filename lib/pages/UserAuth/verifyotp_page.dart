@@ -1,14 +1,15 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
+import 'package:NikeStore/authHandle/OTP_handle.dart';
+import 'package:NikeStore/components/AuthComponents/auth_button.dart';
+import 'package:NikeStore/components/alert_snackbar.dart';
+import 'package:NikeStore/components/loading_progress.dart';
+import 'package:NikeStore/pages/home_page.dart';
+import 'package:NikeStore/pages/profile_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nike_e_commerce/authHandle/OTP_handle.dart';
-import 'package:nike_e_commerce/components/AuthComponents/auth_button.dart';
-import 'package:nike_e_commerce/components/alert_snackbar.dart';
-import 'package:nike_e_commerce/pages/UserAuth/login_page.dart';
-import 'package:nike_e_commerce/pages/profile_page.dart';
-import 'package:nike_e_commerce/provider/auth/auth_service.dart';
+
 import 'package:otp_timer_button/otp_timer_button.dart';
 import 'package:pinput/pinput.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -56,7 +57,8 @@ class _OTPVerifyState extends State<OTPVerify> {
         elevation: 0,
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => HomePage()));
           },
           icon: Icon(Icons.close),
           color: Colors.black,
@@ -118,6 +120,11 @@ class _OTPVerifyState extends State<OTPVerify> {
               margin: EdgeInsets.only(top: 20),
               child: AuthButton(
                 onTap: () async {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return loadingProgress(0.5);
+                      });
                   if (_otpController.text == widget.otp) {
                     showTopSnackBar(
                       Overlay.of(context),
@@ -143,7 +150,7 @@ class _OTPVerifyState extends State<OTPVerify> {
                       'phoneNumber': "",
                       'isVerified': true,
                     });
-
+                    Navigator.pop(context);
                     Future.delayed(Duration(seconds: 3), () {
                       CircularProgressIndicator();
                       Navigator.pushReplacement(

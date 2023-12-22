@@ -1,12 +1,11 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
+import 'package:NikeStore/authHandle/email_handle.dart';
+import 'package:NikeStore/pages/UserAuth/login_page.dart';
+import 'package:NikeStore/pages/UserAuth/profile_pageView.dart';
+import 'package:NikeStore/pages/UserAuth/verifyemail_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:nike_e_commerce/authHandle/email_handle.dart';
-import 'package:nike_e_commerce/pages/UserAuth/login_page.dart';
-import 'package:nike_e_commerce/pages/UserAuth/profile_pageView.dart';
-import 'package:nike_e_commerce/pages/UserAuth/verifyemail_page.dart';
-import 'package:nike_e_commerce/pages/welcome_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key});
@@ -34,10 +33,8 @@ class _ProfilePageState extends State<ProfilePage> {
       setState(() {
         _isCheckingEmail = false;
       });
-      if (isEmailVerified) {
-      } else {
+      if (!isEmailVerified) {
         user.sendEmailVerification();
-
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -60,13 +57,9 @@ class _ProfilePageState extends State<ProfilePage> {
         }
         if (snapshot.hasData) {
           if (_isCheckingEmail) {
-            return ProfilePageView(
-              isLoading: true,
-            ); // Loading state
+            return ProfilePageView(); // Loading state
           } else {
-            return ProfilePageView(
-              isLoading: false,
-            );
+            return ProfilePageView();
           }
         } else {
           return LoginPage();

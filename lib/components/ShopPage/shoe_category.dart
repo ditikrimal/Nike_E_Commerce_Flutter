@@ -1,49 +1,77 @@
+import 'package:NikeStore/components/ShopPage/shoes_list.dart';
+import 'package:NikeStore/pages/category_page.dart';
+import 'package:NikeStore/services/shoe_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:nike_e_commerce/components/ShopPage/category_list.dart';
-import 'package:nike_e_commerce/components/ShopPage/shoeCategory_tile.dart';
-import 'package:nike_e_commerce/components/ShopPage/shop_body.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:NikeStore/components/ShopPage/shoeCategory_tile.dart';
+import 'package:NikeStore/provider/shoes_provider.dart';
+import 'package:shimmer/shimmer.dart';
 
-GridView shoesCategory() {
-  return GridView.count(
-    crossAxisSpacing: 20,
-    mainAxisSpacing: 20,
-    childAspectRatio: 1,
-    physics: const NeverScrollableScrollPhysics(),
-    padding: const EdgeInsets.symmetric(horizontal: 50),
-    crossAxisCount: 2,
-    shrinkWrap: true,
-    children: [
-      categoryTile(
-        'lib/asset/images/shoes_category/Jordan.png',
-        'Jordan',
-        () {},
-      ),
-      categoryTile(
-        'lib/asset/images/shoes_category/Basketball.png',
-        'Basketball',
-        () {},
-      ),
-      categoryTile(
-        'lib/asset/images/shoes_category/Soccer.png',
-        'Soccer',
-        () {},
-      ),
-      categoryTile(
-        'lib/asset/images/shoes_category/Running.png',
-        'Running',
-        () {},
-      ),
-      categoryTile(
-        'lib/asset/images/shoes_category/Skate.png',
-        'Skate',
-        () {},
-      ),
-      categoryTile(
-        'lib/asset/images/shoes_category/TrainingAndGym.png',
-        'Gym',
-        () {},
-      ),
-    ],
+ShoeService shoeService = ShoeService();
+FutureBuilder<List<String>> shoesCategory() {
+  return FutureBuilder<List<String>>(
+    future: shoeService.fetchTopCategories(),
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return _buildshoesCategorySkeleton();
+      }
+
+      if (snapshot.hasError) {
+        return Text('Error: ${snapshot.error}');
+      }
+      List<String>? categories = snapshot.data;
+      return _buildshoesCategory(categories!, context);
+    },
   );
+}
+
+Widget _buildshoesCategory(List categories, BuildContext context) {
+  return GridView.count(
+      crossAxisSpacing: 30,
+      mainAxisSpacing: 30,
+      childAspectRatio: 1,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: const EdgeInsets.symmetric(horizontal: 50),
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      children: categories.map((category) {
+        return categoryTile(
+          'lib/asset/images/shoes_category/$category.png',
+          category,
+          () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => CategoryPage(
+                        categoryName: category,
+                      )),
+            );
+          },
+        );
+      }).toList());
+}
+
+Widget _buildshoesCategorySkeleton() {
+  return GridView.count(
+      crossAxisSpacing: 30,
+      mainAxisSpacing: 30,
+      childAspectRatio: 1,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: const EdgeInsets.symmetric(horizontal: 50),
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      children: List.generate(6, (index) {
+        return Shimmer(
+          gradient: shimmerGradient(),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              gradient: shimmerGradient(),
+              borderRadius: BorderRadius.circular(500),
+            ),
+            width: 100,
+            height: 100,
+          ),
+        );
+      }));
 }

@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart'; // Import your Shoe model
+
 import '../components/loading_progress.dart';
-import '../models/cart.dart';
 import '../models/shoe.dart';
 import '../provider/cart_provider.dart';
-import 'package:provider/provider.dart'; // Import your Shoe model
 
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -16,8 +16,10 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   // Initialize to an empty list
   bool isLoading = false;
-  CartProvider _cartProvider = CartProvider();
+  final CartProvider _cartProvider = CartProvider();
+
   final user_email = FirebaseAuth.instance.currentUser!.email!;
+
   @override
   void initState() {
     super.initState();
@@ -80,7 +82,7 @@ class _CartPageState extends State<CartPage> {
 
   SizedBox cartList(List<Shoe> cart, {bool isLoading = false}) {
     return SizedBox(
-      height: 450,
+      height: MediaQuery.of(context).size.height * 0.6,
       child: Container(
         padding: EdgeInsets.only(left: 10, right: 10),
         child: ListView.builder(
@@ -98,10 +100,9 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  Widget cart_tile(
-    Shoe userCart,
-  ) {
+  Widget cart_tile(Shoe userCart) {
     return Container(
+      padding: EdgeInsets.all(8),
       margin: EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
         color: Colors.grey[200],
@@ -114,26 +115,28 @@ class _CartPageState extends State<CartPage> {
             height: 70,
           ),
           SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                userCart.name,
-                style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  userCart.name,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              Text(
-                '\$ ${userCart.price.toString()}',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
+                SizedBox(height: 5),
+                Text(
+                  '\$ ${userCart.price.toString()}',
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          Spacer(),
           IconButton(
             onPressed: () async {
               setState(() {

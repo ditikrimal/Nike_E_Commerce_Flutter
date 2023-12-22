@@ -1,14 +1,14 @@
 // ignore_for_file: use_build_context_synchronously, prefer_const_constructors
 
+import 'package:NikeStore/authHandle/OTP_handle.dart';
+import 'package:NikeStore/components/alert_snackbar.dart';
+import 'package:NikeStore/components/loading_progress.dart';
+import 'package:NikeStore/pages/UserAuth/verifyotp_page.dart';
+import 'package:NikeStore/provider/auth/auth_exceptions.dart';
+import 'package:NikeStore/provider/auth/auth_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:nike_e_commerce/authHandle/OTP_handle.dart';
-import 'package:nike_e_commerce/components/alert_snackbar.dart';
-import 'package:nike_e_commerce/components/loading_progress.dart';
-import 'package:nike_e_commerce/pages/UserAuth/verifyotp_page.dart';
-import 'package:nike_e_commerce/provider/auth/auth_exceptions.dart';
-import 'package:nike_e_commerce/provider/auth/auth_service.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class RegisterHandle {

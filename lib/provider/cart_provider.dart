@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
 import '../models/shoe.dart';
 import '../services/cart_service.dart';
 
@@ -32,5 +32,17 @@ class CartProvider with ChangeNotifier {
   Future<void> removeFromCart(String shoeId, String email) async {
     await _cartService.removeFromFirestore(shoeId, email);
     await fetchCart(email);
+  }
+
+  Future<bool> checkWishList(Shoe shoe, String? email) {
+    return _cartService.checkWishList(shoe, email);
+  }
+
+  Future<void> addToWishlist(Shoe shoe, String? email) async {
+    await _cartService.addToWishlist(shoe, email);
+  }
+
+  Future<void> removeFromWishlist(Shoe shoe, String? email) async {
+    await _cartService.removeFromWishlist(shoe, email);
   }
 }

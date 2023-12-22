@@ -1,15 +1,20 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
+import 'package:NikeStore/authHandle/googleAuth_handle.dart';
+import 'package:NikeStore/components/bottom_nav_bar.dart';
+import 'package:NikeStore/components/drawer_tiles.dart';
+import 'package:NikeStore/pages/cart_page.dart';
+import 'package:NikeStore/pages/profile_page.dart';
+import 'package:NikeStore/pages/shop_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:nike_e_commerce/authHandle/googleAuth_handle.dart';
-import 'package:nike_e_commerce/components/bottom_nav_bar.dart';
-import 'package:nike_e_commerce/components/drawer_tiles.dart';
-import 'package:nike_e_commerce/pages/cart_page.dart';
-import 'package:nike_e_commerce/pages/profile_page.dart';
-import 'package:nike_e_commerce/pages/shop_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final int initialPageIndex;
+  const HomePage({
+    super.key,
+    this.initialPageIndex = 0,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -18,6 +23,8 @@ class HomePage extends StatefulWidget {
 final GoogleAuthHandle _authService = GoogleAuthHandle();
 
 class _HomePageState extends State<HomePage> {
+  final List<Map<String, dynamic>> products = [];
+
   int _selectedIndex = 0;
 
   final _navigationPages = [
@@ -29,6 +36,12 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.initialPageIndex;
   }
 
   @override
@@ -97,11 +110,17 @@ class _HomePageState extends State<HomePage> {
                     listName: "About",
                   ),
                   ElevatedButton(
-                      onPressed: () {
-                        _authService.signOut();
-                        Navigator.pushReplacementNamed(context, '/login');
-                      },
-                      child: Text('Sign Out'))
+                    onPressed: () {
+                      for (var i = 0; i < products.length; i++) {
+                        FirebaseFirestore.instance
+                            .collection('shoesCollection')
+                            .add(products[i]);
+                      }
+                    },
+                    child: Text(
+                      'Add Shoes Data to FireStore',
+                    ),
+                  ),
                 ],
               ),
             ]),

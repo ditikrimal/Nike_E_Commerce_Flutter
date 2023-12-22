@@ -1,8 +1,9 @@
+import 'package:NikeStore/components/ShopPage/shop_body.dart';
 import 'package:flutter/material.dart';
-import 'package:nike_e_commerce/components/ShopPage/shop_body.dart';
+import 'package:provider/provider.dart';
+
 import '../components/ShopPage/shoes_list.dart';
 import '../provider/shoes_provider.dart';
-import 'package:provider/provider.dart';
 
 class ShopPage extends StatefulWidget {
   const ShopPage({Key? key}) : super(key: key);
@@ -13,20 +14,17 @@ class ShopPage extends StatefulWidget {
 
 class _ShopPageState extends State<ShopPage> {
   @override
-  @override
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      Provider.of<ShoeProvider>(context, listen: false).fetchShoes();
+      Provider.of<ShoeProvider>(context, listen: false).fetchHotPicks();
     });
   }
 
   TextEditingController _searchController = TextEditingController();
 
-  ShoeProvider _shoeProvider = ShoeProvider();
-
   void _handleSearch(String query, ShoeProvider shoeProvider) {
-    final filteredShoes = shoeProvider.shoes
+    final filteredShoes = shoeProvider.hotPicks
         .where((shoe) => shoe.name.toLowerCase().contains(query.toLowerCase()))
         .toList();
 
@@ -37,7 +35,7 @@ class _ShopPageState extends State<ShopPage> {
   }
 
   Future<void> _refreshShoes() async {
-    await Provider.of<ShoeProvider>(context, listen: false).fetchShoes();
+    await Provider.of<ShoeProvider>(context, listen: false).fetchHotPicks();
   }
 
   @override
@@ -48,9 +46,9 @@ class _ShopPageState extends State<ShopPage> {
           color: Colors.black,
           onRefresh: _refreshShoes,
           child: FutureBuilder(
-            future: shoeProvider.shoes.isNotEmpty
+            future: shoeProvider.hotPicks.isNotEmpty
                 ? null
-                : shoeProvider.fetchShoes(),
+                : shoeProvider.fetchHotPicks(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return ShopPageBody(
@@ -61,7 +59,7 @@ class _ShopPageState extends State<ShopPage> {
                 );
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
-              } else if (!shoeProvider.shoes.isNotEmpty) {
+              } else if (!shoeProvider.hotPicks.isNotEmpty) {
                 return emptyShoesList();
               } else {
                 final bool noShoesFound = shoeProvider.filteredShoes.isEmpty;
@@ -71,14 +69,14 @@ class _ShopPageState extends State<ShopPage> {
                     searchController: _searchController,
                     onSearch: (query) => _handleSearch(query, shoeProvider),
                     shoe: shoeProvider.searchQuery.isEmpty
-                        ? shoeProvider.shoes
+                        ? shoeProvider.hotPicks
                         : shoeProvider.filteredShoes,
                   );
                 }
 
                 return ShopPageBody(
                   shoesList: shoeList(shoeProvider.searchQuery.isEmpty
-                      ? shoeProvider.shoes
+                      ? shoeProvider.hotPicks
                       : shoeProvider.filteredShoes),
                   searchController: _searchController,
                   onSearch: (query) => _handleSearch(query, shoeProvider),

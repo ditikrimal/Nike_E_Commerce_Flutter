@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+
 import '../models/shoe.dart';
 
 class CartService {
@@ -33,7 +33,7 @@ class CartService {
         userCart.add(Shoe(
           shoeID: doc.id,
           name: shoeDoc['name'] ?? '',
-          price: shoeDoc['price'] ?? '',
+          price: (shoeDoc['price']).toDouble() ?? 0.0,
           imagePath: shoeDoc['imagePath'] ?? '',
           description: shoeDoc['description'] ?? 'Description',
           numberOfItems: data['numberOfItems'] ?? 1,
@@ -137,5 +137,50 @@ class CartService {
     for (var doc in cartSnapshot.docs) {
       await doc.reference.delete();
     }
+  }
+
+  Future addToWishlist(Shoe shoe, String? email) async {
+    final wishListItemRef = FirebaseFirestore.instance
+        .collection('UserInfo')
+        .doc(email)
+        .collection('wishlist')
+        .doc(shoe.shoeID);
+    final wishListItemDoc = await wishListItemRef.get();
+    if (wishListItemDoc.exists) {
+      return;
+    } else {
+      // If the item doesn't exist, create a new cart item with a reference to the shoe
+      final shoeRef = FirebaseFirestore.instance
+          .collection('shoesCollection')
+          .doc(shoe.shoeID);
+
+      await wishListItemRef.set({
+        'shoeRef': shoeRef, // Assign a valid DocumentReference to 'shoeRef'
+        'addedAt': DateTime.now(),
+        'numberOfItems': 1,
+        // Add other product details as needed
+      });
+    }
+  }
+
+  Future<bool> checkWishList(Shoe shoe, String? email) async {
+    final wishListItemRef = FirebaseFirestore.instance
+        .collection('UserInfo')
+        .doc(email)
+        .collection('wishlist')
+        .doc(shoe.shoeID);
+
+    final cartItemDoc = await wishListItemRef.get();
+
+    return cartItemDoc.exists;
+  }
+
+  Future removeFromWishlist(Shoe shoe, String? email) async {
+    await FirebaseFirestore.instance
+        .collection('UserInfo')
+        .doc(email)
+        .collection('wishlist')
+        .doc(shoe.shoeID)
+        .delete();
   }
 }

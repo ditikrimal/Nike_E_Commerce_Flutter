@@ -1,6 +1,6 @@
+import 'package:NikeStore/components/ShopPage/shoe_tile.dart';
+import 'package:NikeStore/models/shoe.dart';
 import 'package:flutter/material.dart';
-import 'package:nike_e_commerce/components/ShopPage/shoe_tile.dart';
-import 'package:nike_e_commerce/models/shoe.dart';
 
 SizedBox category_list(List<Shoe> shoes, {bool isLoading = false}) {
   return SizedBox(

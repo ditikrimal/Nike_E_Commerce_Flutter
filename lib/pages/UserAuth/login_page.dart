@@ -1,14 +1,15 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
+import 'package:NikeStore/authHandle/googleAuth_handle.dart';
+import 'package:NikeStore/authHandle/login_handle.dart';
+import 'package:NikeStore/components/AuthComponents/auth_button.dart';
+import 'package:NikeStore/components/AuthComponents/auth_textfield.dart';
+import 'package:NikeStore/components/alert_snackbar.dart';
+import 'package:NikeStore/pages/UserAuth/signup_page.dart';
+import 'package:NikeStore/pages/profile_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:nike_e_commerce/authHandle/googleAuth_handle.dart';
-import 'package:nike_e_commerce/authHandle/login_handle.dart';
-import 'package:nike_e_commerce/components/AuthComponents/auth_button.dart';
-import 'package:nike_e_commerce/components/AuthComponents/auth_textfield.dart';
-import 'package:nike_e_commerce/components/alert_snackbar.dart';
-import 'package:nike_e_commerce/pages/UserAuth/signup_page.dart';
-import 'package:nike_e_commerce/pages/profile_page.dart';
+
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 final GoogleAuthHandle _authService = GoogleAuthHandle();

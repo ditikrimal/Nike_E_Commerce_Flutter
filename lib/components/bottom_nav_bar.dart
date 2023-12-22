@@ -20,9 +20,6 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
           onTabChange: widget.onTabChange,
           color: Colors.grey[600],
           activeColor: Colors.black,
-          tabActiveBorder: Border.all(
-            color: Colors.white,
-          ),
           tabBackgroundColor: Colors.grey.shade500,
           padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
           mainAxisAlignment: MainAxisAlignment.center,

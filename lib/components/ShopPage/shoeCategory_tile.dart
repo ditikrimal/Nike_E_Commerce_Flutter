@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 SizedBox categoryTile(String imagePath, String label, Function()? onTap) {
   return SizedBox(
     child: GestureDetector(
       onTap: onTap,
       child: Container(
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: Colors.grey[100],
           borderRadius: BorderRadius.circular(500),
@@ -14,7 +14,7 @@ SizedBox categoryTile(String imagePath, String label, Function()? onTap) {
           children: [
             Image.asset(
               imagePath,
-              height: 100,
+              height: 80,
             ),
             Text(
               label.toUpperCase(),

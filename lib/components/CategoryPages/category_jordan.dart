@@ -1,6 +1,6 @@
+import 'package:NikeStore/components/ShopPage/shoes_list.dart';
+import 'package:NikeStore/models/shoe.dart';
 import 'package:flutter/material.dart';
-import 'package:nike_e_commerce/components/ShopPage/shoes_list.dart';
-import 'package:nike_e_commerce/models/shoe.dart';
 
 List<Shoe> testList = [
   Shoe(

@@ -1,9 +1,10 @@
 // ignore: non_constant_identifier_names
 // ignore_for_file: non_constant_identifier_names, prefer_const_constructors
 
+import 'package:NikeStore/components/ShopPage/shoe_tile.dart';
+import 'package:NikeStore/models/shoe.dart';
 import 'package:flutter/material.dart';
-import 'package:nike_e_commerce/components/ShopPage/shoe_tile.dart';
-import 'package:nike_e_commerce/models/shoe.dart';
+
 import 'package:shimmer/shimmer.dart';
 
 SizedBox shoeList(List<Shoe> shoes, {bool isLoading = false}) {
@@ -59,7 +60,11 @@ SizedBox emptyShoesList() {
 
 shimmerGradient() {
   return LinearGradient(
-    colors: [Colors.grey[300]!, Colors.grey[100]!],
+    colors: [
+      Colors.grey[300]!,
+      Colors.grey[400]!,
+      Colors.grey[300]!,
+    ],
     begin: Alignment(-1.0, -1.0),
     end: Alignment(1.0, 1.0),
   );

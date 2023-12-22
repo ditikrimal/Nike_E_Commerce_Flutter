@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:NikeStore/authHandle/email_handle.dart';
+import 'package:NikeStore/components/AuthComponents/auth_button.dart';
+import 'package:NikeStore/components/alert_snackbar.dart';
+import 'package:NikeStore/components/loading_progress.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:nike_e_commerce/authHandle/email_handle.dart';
-import 'package:nike_e_commerce/components/AuthComponents/auth_button.dart';
-import 'package:nike_e_commerce/components/alert_snackbar.dart';
+
 import 'package:otp_timer_button/otp_timer_button.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
@@ -38,7 +40,7 @@ class VeryEmailPage extends StatelessWidget {
               ),
               SizedBox(height: 20),
               Text(
-                'Verify your email',
+                'Your email is not verified yet.',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -79,7 +81,15 @@ class VeryEmailPage extends StatelessWidget {
                   user?.reload();
                   print(user);
                   if (user?.emailVerified == true) {
+                    showTopSnackBar(
+                      Overlay.of(context),
+                      CustomAlertBar.success(
+                        messageStatus: 'Succes',
+                        message: 'Email verified successfully.',
+                      ),
+                    );
                     updateEmailVerification(user?.email!);
+
                     Navigator.pop(context);
                   } else {
                     showTopSnackBar(

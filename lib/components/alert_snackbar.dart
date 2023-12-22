@@ -27,7 +27,7 @@ class CustomAlertBar extends StatefulWidget {
       color: Colors.white,
       size: 25,
     ),
-    this.backgroundColor = const Color.fromARGB(255, 10, 119, 208),
+    this.backgroundColor = const Color.fromARGB(255, 89, 90, 90),
     this.statusColor = Colors.white,
   }) : super(key: key);
 

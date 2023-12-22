@@ -1,6 +1,5 @@
+import 'package:NikeStore/models/shoe.dart';
 import 'package:flutter/material.dart';
-import 'package:nike_e_commerce/components/ShopPage/shoe_tile.dart';
-import 'package:nike_e_commerce/models/shoe.dart';
 
 Widget category_list(
     List<Shoe> shoes, String categoryName, BuildContext context,
