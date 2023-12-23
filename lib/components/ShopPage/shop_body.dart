@@ -255,7 +255,7 @@ class _ShopPageBodyState extends State<ShopPageBody> {
                                       FirebaseAuth.instance.currentUser;
                                   if (user != null) {
                                     cartProvider.addToCart(
-                                        widget.shoe[index], user.email!);
+                                        widget.shoe[index], user.email!, null);
                                   } else {
                                     Navigator.push(
                                       context,

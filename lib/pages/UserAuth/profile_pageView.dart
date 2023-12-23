@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 import 'dart:io';
 import 'package:NikeStore/components/ShopPage/shoes_list.dart';
+import 'package:NikeStore/components/back_button.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:NikeStore/components/AuthComponents/profile_list_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -43,15 +44,9 @@ class _ProfilePageViewState extends State<ProfilePageView> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
+        toolbarHeight: 75,
         backgroundColor: Colors.grey[300],
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back_ios_new_rounded),
-          color: Colors.black,
-          iconSize: 35,
-        ),
+        leading: backArrow(context),
       ),
       body: widget.isLoading ? _buildSkeleton() : _build(),
     );

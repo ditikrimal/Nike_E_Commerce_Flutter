@@ -35,12 +35,6 @@ class ShoeProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchShoesByCategory(String category) async {
-    _shoes = await _shoeService.fetchShoesFromFirestoreByCategory(category);
-    _filteredShoes = List.from(_shoes);
-    notifyListeners();
-  }
-
   Future<void> fetchTopCategories() async {
     categoryName = await _shoeService.fetchTopCategories();
 

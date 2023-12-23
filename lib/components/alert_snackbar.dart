@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class CustomAlertBar extends StatefulWidget {
   const CustomAlertBar.success({
-    Key? key,
+    super.key,
     required this.message,
     required this.messageStatus,
     this.secondaryMessage,
@@ -15,10 +15,10 @@ class CustomAlertBar extends StatefulWidget {
     ),
     this.backgroundColor = const Color.fromARGB(255, 7, 173, 93),
     this.statusColor = Colors.white,
-  }) : super(key: key);
+  });
 
   const CustomAlertBar.info({
-    Key? key,
+    super.key,
     required this.message,
     required this.messageStatus,
     this.secondaryMessage,
@@ -29,10 +29,10 @@ class CustomAlertBar extends StatefulWidget {
     ),
     this.backgroundColor = const Color.fromARGB(255, 89, 90, 90),
     this.statusColor = Colors.white,
-  }) : super(key: key);
+  });
 
   const CustomAlertBar.error({
-    Key? key,
+    super.key,
     required this.message,
     required this.messageStatus,
     this.secondaryMessage,
@@ -43,7 +43,7 @@ class CustomAlertBar extends StatefulWidget {
     ),
     this.backgroundColor = const Color.fromARGB(255, 178, 11, 11),
     this.statusColor = Colors.white,
-  }) : super(key: key);
+  });
   final String message;
   final String messageStatus;
   final Widget icon;

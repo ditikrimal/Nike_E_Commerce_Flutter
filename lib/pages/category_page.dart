@@ -1,3 +1,4 @@
+import 'package:NikeStore/components/back_button.dart';
 import 'package:flutter/material.dart';
 
 class CategoryPage extends StatelessWidget {
@@ -14,7 +15,7 @@ class CategoryPage extends StatelessWidget {
           title: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'Category: $categoryName',
+              categoryName.toUpperCase(),
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -22,14 +23,7 @@ class CategoryPage extends StatelessWidget {
               ),
             ),
           ),
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(Icons.arrow_back_ios_new_rounded),
-            color: Colors.black,
-            iconSize: 32,
-          ),
+          leading: backArrow(context),
         ),
         body: Center(
           child: Text('Category Page of $categoryName'),

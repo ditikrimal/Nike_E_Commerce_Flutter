@@ -5,8 +5,13 @@ import 'package:flutter/material.dart';
 
 class AddToCartButton extends StatefulWidget {
   final Function onTap;
+  final bool disableAnimation; // New parameter to disable animation
 
-  const AddToCartButton({Key? key, required this.onTap}) : super(key: key);
+  const AddToCartButton({
+    Key? key,
+    required this.onTap,
+    this.disableAnimation = false, // Default value is false
+  }) : super(key: key);
 
   @override
   _AddToCartButtonState createState() => _AddToCartButtonState();
@@ -16,7 +21,7 @@ class _AddToCartButtonState extends State<AddToCartButton>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
-  bool _isButtonDisabled = false; // Flag to track button state
+  bool _isButtonDisabled = false;
 
   @override
   void initState() {
@@ -41,32 +46,26 @@ class _AddToCartButtonState extends State<AddToCartButton>
       onTap: _isButtonDisabled
           ? null
           : () async {
-              // Check if the user is logged in before triggering animation
               if (isLoggedIn()) {
-                // Perform the addToCart action
                 widget.onTap();
 
-                // Trigger the animation
-                _controller.forward();
+                if (!widget.disableAnimation) {
+                  _controller.forward();
 
-                // Disable the button to prevent further interactions
-                setState(() {
-                  _isButtonDisabled = true;
-                });
-
-                // Wait for 5 seconds and then reset the button state
-                await Future.delayed(Duration(seconds: 3));
-
-                // Check if the widget is still in the tree before calling setState
-                if (mounted) {
-                  // Reset button state
                   setState(() {
-                    _isButtonDisabled = false;
-                    _controller.reset();
+                    _isButtonDisabled = true;
                   });
+
+                  await Future.delayed(Duration(seconds: 3));
+
+                  if (mounted) {
+                    setState(() {
+                      _isButtonDisabled = false;
+                      _controller.reset();
+                    });
+                  }
                 }
               } else {
-                // Navigate to the login page if not logged in
                 Navigator.pushNamed(context, '/login');
               }
             },
@@ -83,7 +82,8 @@ class _AddToCartButtonState extends State<AddToCartButton>
           animation: _animation,
           builder: (context, child) {
             return Transform.rotate(
-              angle: _animation.value * (3.14 * 2), // Full rotation
+              angle:
+                  widget.disableAnimation ? 0 : _animation.value * (3.14 * 2),
               child: Icon(
                 _animation.isCompleted ? Icons.check : Icons.add,
                 size: 32,
@@ -96,7 +96,6 @@ class _AddToCartButtonState extends State<AddToCartButton>
     );
   }
 
-  // Example function to check if the user is logged in
   bool isLoggedIn() {
     final user = FirebaseAuth.instance.currentUser;
     return user != null;

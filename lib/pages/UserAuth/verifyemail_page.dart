@@ -103,6 +103,13 @@ class VeryEmailPage extends StatelessWidget {
                 },
                 buttonLabel: 'Continue',
               ),
+              SizedBox(height: 10),
+              AuthButton(
+                  onTap: () {
+                    FirebaseAuth.instance.signOut();
+                    Navigator.pop(context);
+                  },
+                  buttonLabel: 'Logout'),
               SizedBox(height: 20),
               Text(
                 'Didn\'t receive the email?',

@@ -5,10 +5,18 @@ import 'package:flutter/material.dart';
 class AuthButton extends StatelessWidget {
   Function() onTap;
   String buttonLabel;
+  double buttonWidth;
+  double vericalPadding;
+  double radius;
+  double fontSize;
   AuthButton({
     super.key,
     required this.onTap,
     this.buttonLabel = 'Login',
+    this.buttonWidth = double.infinity,
+    this.vericalPadding = 18,
+    this.radius = 10,
+    this.fontSize = 20,
   });
 
   @override
@@ -18,18 +26,18 @@ class AuthButton extends StatelessWidget {
         await onTap();
       },
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 18),
+        padding: EdgeInsets.symmetric(vertical: vericalPadding),
         decoration: BoxDecoration(
           color: Colors.black,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(radius),
         ),
-        width: double.infinity,
+        width: buttonWidth,
         alignment: Alignment.center,
         child: Text(
           buttonLabel,
           style: TextStyle(
             color: Colors.white,
-            fontSize: 20,
+            fontSize: fontSize,
             fontWeight: FontWeight.bold,
           ),
         ),

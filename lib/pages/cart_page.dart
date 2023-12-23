@@ -1,7 +1,7 @@
+import 'package:NikeStore/components/AuthComponents/auth_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart'; // Import your Shoe model
-
 import '../components/loading_progress.dart';
 import '../models/shoe.dart';
 import '../provider/cart_provider.dart';
@@ -44,11 +44,12 @@ class _CartPageState extends State<CartPage> {
               : _cartProvider.fetchCart(user_email),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return cart_page_body(cartList([], isLoading: true));
+              return cart_page_body(cartList([], isLoading: true),
+                  hasData: false);
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (!_cartProvider.cart.isNotEmpty) {
-              return cart_page_body(emptyCart());
+              return cart_page_body(emptyCart(), hasData: false);
             } else {
               return cart_page_body(cartList(_cartProvider.cart));
             }
@@ -59,22 +60,58 @@ class _CartPageState extends State<CartPage> {
     ]);
   }
 
-  Widget cart_page_body(SizedBox cartList) {
+  Widget cart_page_body(SizedBox cartList, {bool hasData = true}) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: Text(
-              'Your Cart'.toUpperCase(),
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Text(
+                  'Your Cart'.toUpperCase(),
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+              ),
+              Spacer(),
+              TextButton(
+                onPressed: hasData
+                    ? () async {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        await _cartProvider.clearCart(user_email);
+                        setState(() {
+                          isLoading = false;
+                        });
+                      }
+                    : null,
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                      hasData ? Colors.grey[900] : Colors.grey[200]),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(7),
+                    ),
+                  ),
+                ),
+                child: const Text(
+                  'Clear Cart',
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              SizedBox(width: 10)
+            ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           cartList,
-          Spacer(),
+          const Spacer(),
+          hasData ? checkoutAndTotal() : SizedBox(),
         ],
       ),
     );
@@ -82,7 +119,7 @@ class _CartPageState extends State<CartPage> {
 
   SizedBox cartList(List<Shoe> cart, {bool isLoading = false}) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.6,
+      height: MediaQuery.of(context).size.height * 0.62,
       child: Container(
         padding: EdgeInsets.only(left: 10, right: 10),
         child: ListView.builder(
@@ -126,13 +163,24 @@ class _CartPageState extends State<CartPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 5),
-                Text(
-                  '\$ ${userCart.price.toString()}',
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                  ),
+                Row(
+                  children: [
+                    Text(
+                      '\$ ${userCart.price.toString()}',
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      'Size: ${userCart.selectedSize.toString()}',
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -142,8 +190,7 @@ class _CartPageState extends State<CartPage> {
               setState(() {
                 isLoading = true;
               });
-              await _cartProvider.decrementItemInCart(
-                  userCart.shoeID, user_email);
+              await _cartProvider.decrementItemInCart(userCart.id, user_email);
               setState(() {
                 isLoading = false;
               });
@@ -162,8 +209,7 @@ class _CartPageState extends State<CartPage> {
               setState(() {
                 isLoading = true;
               });
-              await _cartProvider.incrementItemInCart(
-                  userCart.shoeID, user_email);
+              await _cartProvider.incrementItemInCart(userCart.id, user_email);
               setState(() {
                 isLoading = false;
               });
@@ -175,7 +221,7 @@ class _CartPageState extends State<CartPage> {
               setState(() {
                 isLoading = true;
               });
-              await _cartProvider.removeFromCart(userCart.shoeID, user_email);
+              await _cartProvider.removeFromCart(userCart.id, user_email);
               setState(() {
                 isLoading = false;
               });
@@ -183,6 +229,19 @@ class _CartPageState extends State<CartPage> {
             icon: Icon(Icons.delete),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget checkoutAndTotal() {
+    return Center(
+      child: AuthButton(
+        onTap: () {},
+        buttonLabel: 'PROCEED TO CHECKOUT',
+        buttonWidth: MediaQuery.of(context).size.width / 1.2,
+        vericalPadding: 14,
+        radius: 6,
+        fontSize: 19,
       ),
     );
   }

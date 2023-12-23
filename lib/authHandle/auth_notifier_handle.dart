@@ -1,17 +1,22 @@
-import 'package:flutter/material.dart';
+import 'package:NikeStore/authHandle/email_handle.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class AuthProvider extends ChangeNotifier {
-  bool _isLoggedIn = false;
+class AuthStatus {
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
-  bool get isLoggedIn => _isLoggedIn;
+  // Get current user
+  User? get user => _auth.currentUser;
 
-  void login() {
-    _isLoggedIn = true;
-    notifyListeners();
-  }
+  // Get current user email
+  String? get userEmail => _auth.currentUser!.email;
 
-  void logout() {
-    _isLoggedIn = false;
-    notifyListeners();
+  // Get current user email verification status from firestore under UserInfo collection
+  Future<bool> get isEmailVerified async {
+    final user = _auth.currentUser;
+    if (user != null) {
+      final isEmailVerified = await checkEmail(user.email);
+      return isEmailVerified;
+    }
+    return false;
   }
 }

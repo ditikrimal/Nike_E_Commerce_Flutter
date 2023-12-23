@@ -5,6 +5,7 @@ class Cart {
   final String imagePath;
   final String description;
   final int numberOfItems;
+  final int size;
   Cart({
     required this.shoeID,
     required this.name,
@@ -12,5 +13,6 @@ class Cart {
     required this.imagePath,
     required this.description,
     this.numberOfItems = 1,
+    this.size = 40,
   });
 }

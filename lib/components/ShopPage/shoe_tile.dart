@@ -14,6 +14,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class ShoeTile extends StatelessWidget {
   final Shoe shoe;
+
   ShoeTile({super.key, required this.shoe});
   // final user = AuthService.firebase().currentUser;
   CartProvider cartProvider = CartProvider();
@@ -59,8 +60,8 @@ class ShoeTile extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Text(
                 shoe.description,
-                style: TextStyle(
-                    color: Colors.grey[600], fontWeight: FontWeight.bold),
+                style:
+                    TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
               ),
             ),
             Padding(
@@ -72,7 +73,7 @@ class ShoeTile extends StatelessWidget {
                     '\$ ${shoe.price.toString()}',
                     style: TextStyle(
                       fontSize: 20,
-                      color: Colors.grey,
+                      color: Colors.grey[800],
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -80,9 +81,8 @@ class ShoeTile extends StatelessWidget {
                     onTap: () async {
                       final user = FirebaseAuth.instance.currentUser;
                       if (user != null) {
-                        if (user.emailVerified ||
-                            await checkEmail(user.email)) {
-                          cartProvider.addToCart(shoe, user.email!);
+                        if (await checkEmail(user.email)) {
+                          cartProvider.addToCart(shoe, user.email!, null);
                           showTopSnackBar(
                             Overlay.of(context),
                             CustomAlertBar.info(
@@ -91,6 +91,13 @@ class ShoeTile extends StatelessWidget {
                             ),
                           );
                         } else {
+                          showTopSnackBar(
+                            Overlay.of(context),
+                            CustomAlertBar.info(
+                              messageStatus: 'Email',
+                              message: 'Verify email to continue shopping',
+                            ),
+                          );
                           user.sendEmailVerification();
                           Navigator.push(
                             context,

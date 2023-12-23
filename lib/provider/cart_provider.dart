@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 import '../models/shoe.dart';
@@ -6,16 +8,23 @@ import '../services/cart_service.dart';
 class CartProvider with ChangeNotifier {
   final CartService _cartService = CartService();
   List<Shoe> _userCart = [];
-
+  double _total = 0;
   List<Shoe> get cart => _userCart;
+  double get totalPrice => _total;
 
   Future<void> fetchCart(String email) async {
     _userCart = await _cartService.getCurrentUserCart(email);
     notifyListeners();
   }
 
-  Future<void> addToCart(Shoe shoe, String email) async {
-    await _cartService.addToFirestore(shoe, email);
+  Future<void> addToCart(Shoe shoe, String email, int? selectedSize) async {
+    print('This is Provider cart: $selectedSize');
+    await _cartService.addToFirestore(shoe, email, selectedSize);
+    await fetchCart(email);
+  }
+
+  Future<void> clearCart(String email) async {
+    await _cartService.clearFirestoreCart(email);
     await fetchCart(email);
   }
 
@@ -44,5 +53,15 @@ class CartProvider with ChangeNotifier {
 
   Future<void> removeFromWishlist(Shoe shoe, String? email) async {
     await _cartService.removeFromWishlist(shoe, email);
+  }
+
+  Future<double> calculateTotal(String email) async {
+    _total = await _cartService.calculateTotalPrice(email);
+    return _total;
+  }
+
+  Future<num> getCartItemCount(String email) async {
+    num itemCount = await _cartService.getCartItemCount(email);
+    return itemCount;
   }
 }

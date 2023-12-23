@@ -73,7 +73,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 ),
               ),
               onPressed: () {
-                Navigator.push(context,
+                Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => HomePage()));
               },
               avatar: Icon(
