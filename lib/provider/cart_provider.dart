@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 import '../models/shoe.dart';
@@ -18,7 +16,6 @@ class CartProvider with ChangeNotifier {
   }
 
   Future<void> addToCart(Shoe shoe, String email, int? selectedSize) async {
-    print('This is Provider cart: $selectedSize');
     await _cartService.addToFirestore(shoe, email, selectedSize);
     await fetchCart(email);
   }
@@ -41,18 +38,6 @@ class CartProvider with ChangeNotifier {
   Future<void> removeFromCart(String shoeId, String email) async {
     await _cartService.removeFromFirestore(shoeId, email);
     await fetchCart(email);
-  }
-
-  Future<bool> checkWishList(Shoe shoe, String? email) {
-    return _cartService.checkWishList(shoe, email);
-  }
-
-  Future<void> addToWishlist(Shoe shoe, String? email) async {
-    await _cartService.addToWishlist(shoe, email);
-  }
-
-  Future<void> removeFromWishlist(Shoe shoe, String? email) async {
-    await _cartService.removeFromWishlist(shoe, email);
   }
 
   Future<double> calculateTotal(String email) async {

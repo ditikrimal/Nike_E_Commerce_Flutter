@@ -90,57 +90,64 @@ Widget _buildSkeletonLoading() {
               Shimmer(
                 gradient: shimmerGradient(),
                 child: Container(
-                  margin: EdgeInsets.all(10),
+                  margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
                   decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(15),
+                    color: Colors.grey[200],
+                    gradient: shimmerGradient(),
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  height: 200,
+                  width: 300,
+                  height: 220,
                 ),
               ),
-              Shimmer(
-                gradient: shimmerGradient(),
+              Flexible(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Container(
-                    height: 20,
-                    color: Colors.grey[300],
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: Shimmer(
+                    gradient: shimmerGradient(),
+                    child: Container(
+                      margin: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        gradient: shimmerGradient(),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      width: double.infinity,
+                      height: 30,
+                    ),
                   ),
                 ),
               ),
-              SizedBox(
-                height: 10,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Shimmer(
+                  gradient: shimmerGradient(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      gradient: shimmerGradient(),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    width: double.infinity,
+                    height: 50,
+                  ),
+                ),
               ),
               Padding(
                 padding: EdgeInsets.only(left: 15.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(bottom: 5),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Shimmer(
-                            gradient: shimmerGradient(),
-                            child: Container(
-                              height: 20,
-                              width: 100,
-                              color: Colors.grey[300],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Shimmer(
-                              gradient: shimmerGradient(),
-                              child: Container(
-                                height: 20,
-                                width: 50,
-                                color: Colors.grey[300],
-                              ))
-                        ],
+                    Shimmer(
+                      gradient: shimmerGradient(),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          gradient: shimmerGradient(),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        width: 100,
+                        height: 30,
                       ),
                     ),
                     Shimmer(

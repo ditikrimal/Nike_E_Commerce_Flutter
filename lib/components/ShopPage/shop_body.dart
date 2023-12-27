@@ -15,18 +15,18 @@ class ShopPageBody extends StatefulWidget {
   final List<Shoe> shoe;
 
   const ShopPageBody({
-    Key? key,
+    super.key,
     required this.shoesList,
     required this.searchController,
     required this.onSearch,
     required this.shoe,
-  }) : super(key: key);
+  });
 
   @override
-  _ShopPageBodyState createState() => _ShopPageBodyState();
+  ShopPageBodyState createState() => ShopPageBodyState();
 }
 
-class _ShopPageBodyState extends State<ShopPageBody> {
+class ShopPageBodyState extends State<ShopPageBody> {
   bool isSearching = false;
   CartProvider cartProvider = CartProvider();
 
@@ -211,7 +211,7 @@ class _ShopPageBodyState extends State<ShopPageBody> {
                           width: double.infinity,
                           fit: BoxFit.cover,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 50,
                         ),
                         Padding(
@@ -223,11 +223,11 @@ class _ShopPageBodyState extends State<ShopPageBody> {
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: 20.0),
+                          padding: const EdgeInsets.only(left: 20.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

@@ -7,6 +7,7 @@ import 'package:NikeStore/pages/UserAuth/login_page.dart';
 import 'package:NikeStore/pages/UserAuth/verifyemail_page.dart';
 import 'package:NikeStore/pages/home_page.dart';
 import 'package:NikeStore/provider/cart_provider.dart';
+import 'package:NikeStore/provider/user_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
@@ -27,13 +28,14 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
   late Future<bool> _isWishListed = Future.value(false);
 
+  UserProvider _userProvider = UserProvider();
   CartProvider _cartProvider = CartProvider();
 
   @override
   void initState() {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      _isWishListed = _cartProvider.checkWishList(
+      _isWishListed = _userProvider.checkWishList(
           widget.shoe, FirebaseAuth.instance.currentUser!.email);
       super.initState();
     }
@@ -63,7 +65,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     if (user != null) {
                       if (user.emailVerified || await checkEmail(user.email)) {
                         if (isLiked) {
-                          await _cartProvider.removeFromWishlist(widget.shoe,
+                          await _userProvider.removeFromWishlist(widget.shoe,
                               FirebaseAuth.instance.currentUser!.email);
                           showTopSnackBar(
                             Overlay.of(context),
@@ -74,7 +76,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                             ),
                           );
                         } else {
-                          await _cartProvider.addToWishlist(
+                          await _userProvider.addToWishlist(
                               widget.shoe, user.email);
                           showTopSnackBar(
                             Overlay.of(context),
@@ -85,7 +87,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           );
                         }
                         setState(() {
-                          _isWishListed = _cartProvider.checkWishList(
+                          _isWishListed = _userProvider.checkWishList(
                               widget.shoe, user.email);
                         });
                         return !isLiked;

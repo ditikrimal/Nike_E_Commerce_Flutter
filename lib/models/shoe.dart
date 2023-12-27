@@ -36,7 +36,7 @@ class Shoe {
       pickedItems: json['pickedItems'],
       price: json['price'].toDouble(),
       sizes: sizes,
-      selectedSize: json['selectedSize'],
+      selectedSize: json['selectedSize'] ?? 40,
     );
   }
 }

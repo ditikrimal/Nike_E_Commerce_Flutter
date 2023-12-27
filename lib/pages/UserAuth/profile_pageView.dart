@@ -2,6 +2,8 @@
 import 'dart:io';
 import 'package:NikeStore/components/ShopPage/shoes_list.dart';
 import 'package:NikeStore/components/back_button.dart';
+import 'package:NikeStore/components/my-appbar.dart';
+import 'package:NikeStore/pages/ProfilePages/my-wishlist.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:NikeStore/components/AuthComponents/profile_list_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -43,11 +45,7 @@ class _ProfilePageViewState extends State<ProfilePageView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      appBar: AppBar(
-        toolbarHeight: 75,
-        backgroundColor: Colors.grey[300],
-        leading: backArrow(context),
-      ),
+      appBar: myAppBar(context, null),
       body: widget.isLoading ? _buildSkeleton() : _build(),
     );
   }
@@ -132,8 +130,11 @@ class _ProfilePageViewState extends State<ProfilePageView> {
             children: [
               ProfileListTile('Account', Icons.person_outline_rounded, () {}),
               ProfileListTile('Orders', Icons.shopping_bag_outlined, () {}),
-              ProfileListTile(
-                  'My Wishlist', Icons.favorite_border_outlined, () {}),
+              ProfileListTile('My Wishlist', Icons.favorite_border_outlined,
+                  () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => MyWishlist()));
+              }),
               ProfileListTile(
                   'Help & Support', Icons.help_outline_rounded, () {}),
               ProfileListTile('Settings', Icons.settings_outlined, () {}),

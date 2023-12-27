@@ -25,6 +25,31 @@ class ShoeService {
     }).toList();
   }
 
+  Future<List<Shoe>> fetchShoesByCategory(String category) async {
+    final QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+        .instance
+        .collection('shoesCollection')
+        .where('category', isEqualTo: category)
+        .get();
+
+    return snapshot.docs.map((DocumentSnapshot<Map<String, dynamic>> doc) {
+      Map<String, dynamic> data = doc.data()!;
+      Map<String, int> sizes = Map<String, int>.from(data['size'] ?? {});
+
+      return Shoe(
+        id: doc.id,
+        name: data['name'] ?? '',
+        price: (data['price'] ?? 0.0).toDouble(),
+        imagePath: data['imagePath'] ?? '',
+        description: data['description'] ?? '',
+        category: data['category'] ?? '',
+        numberOfItems: data['numberOfItems'] ?? 0,
+        pickedItems: data['pickedItems'] ?? 0,
+        sizes: sizes,
+      );
+    }).toList();
+  }
+
   Future<List<String>> fetchTopCategories() async {
     final QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
         .instance

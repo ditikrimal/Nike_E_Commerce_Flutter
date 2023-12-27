@@ -1,0 +1,13 @@
+flutter_native_splash:
+  color: "#ffffff"
+  color_dark: "#272727"
+  image: lib/asset/images/NikeLogo.png
+  image_dark: lib/asset/images/NikeLogo.png
+
+  android_12:
+    color: "#ffffff"
+    color_dark: "#272727"
+    image: lib/asset/images/NikeLogo.png
+    image_dark: lib/asset/images/NikeLogo.png
+
+  web: false

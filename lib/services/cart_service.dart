@@ -14,7 +14,7 @@ class CartService {
         .get();
 
     for (var doc in cartSnapshot.docs) {
-      Map<String, dynamic> data = doc.data()!;
+      Map<String, dynamic> data = doc.data();
       DocumentReference shoeRef = data['shoeRef'];
       var shoeDoc = await shoeRef.get();
 
