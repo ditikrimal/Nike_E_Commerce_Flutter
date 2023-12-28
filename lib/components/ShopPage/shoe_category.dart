@@ -26,13 +26,14 @@ FutureBuilder<List<String>> shoesCategory() {
 }
 
 Widget _buildshoesCategory(List categories, BuildContext context) {
+  final deviceSize = MediaQuery.of(context).size.width;
   return GridView.count(
       crossAxisSpacing: 30,
       mainAxisSpacing: 30,
       childAspectRatio: 1,
       physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.symmetric(horizontal: 50),
-      crossAxisCount: 2,
+      crossAxisCount: deviceSize > 600 ? 4 : 2,
       shrinkWrap: true,
       children: categories.map((category) {
         return categoryTile(
@@ -47,6 +48,7 @@ Widget _buildshoesCategory(List categories, BuildContext context) {
                       )),
             );
           },
+          isLargeScreen: deviceSize > 600,
         );
       }).toList());
 }
